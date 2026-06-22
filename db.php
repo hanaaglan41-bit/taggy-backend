@@ -1,18 +1,12 @@
 <?php
 
-$host = getenv("MYSQLHOST");
-$user = getenv("MYSQLUSER");
-$password = getenv("MYSQLPASSWORD");
-$database = getenv("MYSQLDATABASE");
-$port = getenv("MYSQLPORT");
+$host = getenv("DB_HOST") ?: getenv("MYSQLHOST");
+$user = getenv("DB_USER") ?: getenv("MYSQLUSER");
+$password = getenv("DB_PASS") ?: getenv("MYSQLPASSWORD");
+$database = getenv("DB_NAME") ?: getenv("MYSQLDATABASE");
+$port = getenv("MYSQLPORT") ?: 3306;
 
-$conn = mysqli_connect(
-    $host,
-    $user,
-    $password,
-    $database,
-    $port
-);
+$conn = mysqli_connect($host, $user, $password, $database, (int)$port);
 
 if (!$conn) {
     header("Content-Type: application/json; charset=UTF-8");
